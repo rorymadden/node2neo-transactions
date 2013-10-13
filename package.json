@@ -1,5 +1,5 @@
 {
-  "name": "node2neo",
+  "name": "node2neo-transactions",
   "description": "Neo4j transaction support for Node.js",
   "version": "0.0.2",
   "author": {
