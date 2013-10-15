@@ -4,8 +4,6 @@ var Transaction = require('../');
 var EventEmitter = require('events').EventEmitter;
 
 var should = require('chai').should();
-var sinon = require('sinon');
-var assert = require('assert');
 
 
 
@@ -13,6 +11,8 @@ var transaction, User, rootUserId, userData;
 
 
 describe("transaction", function(){
+  // before(testDatabase.refreshDb);
+  // after(testDatabase.stopDb);
   it("should begin a transaction", function(done){
     var trans1 = new Transaction(db);
     trans1.begin(function(err, response){
@@ -192,59 +192,6 @@ describe("transaction", function(){
       should.exist(err);
       err.message.should.equal('This Transaction is not open. There is nothing to remove.');
       done();
-    });
-  });
-  it("should execute a statement on an open transaction", function(done){
-    var trans = new Transaction(db);
-    trans.begin(function(err){
-      should.not.exist(err);
-      trans.exec('Create n:User RETURN id(n)', function(err, result){
-        should.not.exist(err);
-        result[0].data[0].row[0].should.be.a('number');
-        trans.commit(function(err){
-          should.not.exist(err);
-          done();
-        });
-      });
-    });
-  });
-  it("should emit events: begin", function(done){
-    var trans = new Transaction(db);
-    var eventEmit = new EventEmitter();
-    trans._events.push({
-      eventEmitter: eventEmit,
-      args: ['test', {name: 'Test'}, {second: 'Test'}]
-    });
-    var eventSpy = sinon.spy();
-    eventEmit.on('test', eventSpy);
-
-    trans.begin('Create n RETURN n', {commit: true}, function(err, response){
-      should.not.exist(err);
-      assert(eventSpy.called, 'Event did not fire.');
-      assert(eventSpy.calledOnce, 'Event fired more than once');
-      eventSpy.alwaysCalledWithExactly({name: 'Test'}, {second: 'Test'}).should.equal(true);
-      done();
-    });
-  });
-  it("should emit events: commit", function(done){
-    var trans = new Transaction(db);
-    var eventEmit = new EventEmitter();
-    trans._events.push({
-      eventEmitter: eventEmit,
-      args: ['test2', {name: 'Test'}, {second: 'Test'}]
-    });
-    var eventSpy = sinon.spy();
-    eventEmit.on('test2', eventSpy);
-
-    trans.begin(function(err){
-      should.not.exist(err);
-      trans.commit(function(err, response){
-        should.not.exist(err);
-        assert(eventSpy.called, 'Event did not fire.');
-        assert(eventSpy.calledOnce, 'Event fired more than once');
-        eventSpy.alwaysCalledWithExactly({name: 'Test'}, {second: 'Test'}).should.equal(true);
-        done();
-      });
     });
   });
 });

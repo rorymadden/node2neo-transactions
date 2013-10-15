@@ -1,7 +1,7 @@
 {
   "name": "node2neo-transactions",
-  "description": "Transaction wrapper for Node2Neo",
-  "version": "0.0.3",
+  "description": "Neo4j transaction support for Node.js",
+  "version": "0.0.2",
   "author": {
     "name": "Rory Madden",
     "email": "rorymadden@gmail.com"
@@ -27,8 +27,7 @@
     "disposable-seraph": "~0.2.7",
     "mocha": "~1.3.0",
     "chai": "~1.8.0",
-    "node2neo": "0.0.1",
-    "sinon": "1.7.3"
+    "node2neo": "0.0.1"
   },
   "engines": {
     "node": ">= 0.8"
