@@ -20,7 +20,7 @@
     "quick-test": "USE_DIRTY_DATABASE=true NO_STOP=true ./node_modules/mocha/bin/mocha -R spec -t 3000 -s 2000"
   },
   "dependencies": {
-    "superagent": "0.12.x",
+    "superagent": "~> 3.7.0",
     "q":"0.9.x"
   },
   "devDependencies": {
